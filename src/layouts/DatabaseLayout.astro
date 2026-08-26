@@ -1,0 +1,13 @@
+---
+import BaseLayout from './BaseLayout.astro';
+const { title, description, category, project='Digimon Odyssey' } = Astro.props;
+---
+<BaseLayout title={`${title} — Digimon Odyssey Database`} description={description} active="database">
+  <article class="article">
+    <span class="tag">{category}</span>
+    <div class="meta" style="margin-top:14px">{project} · Database</div>
+    <h1>{title}</h1>
+    <p class="lead">{description}</p>
+    <slot />
+  </article>
+</BaseLayout>

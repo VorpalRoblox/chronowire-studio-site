@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+const {
+  title = 'Chronowire Studio',
+  description = 'Chronowire Studio — Digimon Odyssey updates and game database.',
+  active = ''
+} = Astro.props;
+const base = import.meta.env.BASE_URL;
+const url = (path) => `${base}${path.replace(/^\//,'')}`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+</head>
+<body>
+<div class="nav-wrap"><div class="container nav">
+  <a class="brand" href={url('/')}><span class="logo"></span><span>Chronowire <span class="orange">Studio</span></span></a>
+  <button class="hamb" id="menuButton">Menu</button>
+  <nav class="nav-links" id="navLinks">
+    <a class:list={[active==='home' && 'active']} href={url('/')}>Home</a>
+    <a class:list={[active==='games' && 'active']} href={url('/games/')}>Games</a>
+    <a class:list={[active==='blogs' && 'active']} href={url('/blog/')}>Updates</a>
+    <a class:list={[active==='database' && 'active']} href={url('/database/')}>Database</a>
+    <a class="nav-cta" href="https://www.roblox.com/communities/4473875/Chronowire-Studio#!/about" target="_blank">Roblox Group ↗</a>
+  </nav>
+</div></div>
+<slot />
+<footer class="footer"><div class="container footer-grid">
+  <div><a class="brand" href={url('/')}><span class="logo"></span><span>Chronowire <span class="orange">Studio</span></span></a><p style="color:#aaa;max-width:420px;line-height:1.6">Games, development updates, and community knowledge for Chronowire Studio projects.</p><small>Fan-made studio website concept. Digimon is a trademark of its respective rights holders.</small></div>
+  <div><b>Explore</b><a href={url('/games/')}>Games</a><a href={url('/blog/')}>Updates</a><a href={url('/database/')}>Database</a></div>
+  <div><b>Community</b><a href="https://www.roblox.com/communities/4473875/Chronowire-Studio#!/about" target="_blank">Roblox Group</a><a href="https://www.roblox.com/games/92494551546395/Digimon-Odyssey" target="_blank">Play Digimon Odyssey</a></div>
+</div></footer>
+<script is:inline>
+document.getElementById('menuButton')?.addEventListener('click',()=>document.getElementById('navLinks')?.classList.toggle('open'));
+</script>
+</body>
+</html>

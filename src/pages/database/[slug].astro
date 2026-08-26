@@ -1,0 +1,13 @@
+---
+import { getCollection, render } from 'astro:content';
+import DatabaseLayout from '../../layouts/DatabaseLayout.astro';
+export async function getStaticPaths() {
+  const entries = await getCollection('database', ({data}) => !data.draft);
+  return entries.map(entry => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<DatabaseLayout {...entry.data}>
+  <Content />
+</DatabaseLayout>

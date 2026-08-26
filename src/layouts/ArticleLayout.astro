@@ -1,0 +1,13 @@
+---
+import BaseLayout from './BaseLayout.astro';
+const { title, description, category, pubDate, project='Digimon Odyssey', active='blogs' } = Astro.props;
+---
+<BaseLayout title={`${title} — Chronowire Studio`} description={description} active={active}>
+  <article class="article">
+    <span class="tag">{category}</span>
+    {pubDate && <div class="meta" style="margin-top:14px">{new Date(pubDate).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})} · {project}</div>}
+    <h1>{title}</h1>
+    <p class="lead">{description}</p>
+    <slot />
+  </article>
+</BaseLayout>

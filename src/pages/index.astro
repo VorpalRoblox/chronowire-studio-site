@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL;
+const url = (path) => `${base}${path.replace(/^\//,'')}`;
+const posts = (await getCollection('blog', ({data}) => !data.draft))
+  .sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
+const featured = posts.find(p=>p.data.featured) ?? posts[0];
+---
+<BaseLayout active="home">
+<main>
+<section class="hero"><div class="container hero-grid">
+<div><span class="eyebrow">Chronowire Studio · Roblox</span><h1>Building worlds worth <span>exploring.</span></h1><p class="lead">Chronowire Studio is developing <b>Digimon Odyssey</b>, a Roblox adventure with its own evolving world, systems, discoveries, and community knowledge base.</p><div class="actions"><a class="btn btn-orange" href={url('/games/')}>Explore Digimon Odyssey</a><a class="btn btn-light" href={url('/database/')}>Browse Database</a></div></div>
+<a class="game-art" href="https://www.roblox.com/games/92494551546395/Digimon-Odyssey" target="_blank" aria-label="Play Digimon Odyssey on Roblox"><img src={url('/images/digimon-odyssey-art.png')} alt="Digimon Odyssey artwork" /></a>
+</div></section>
+<section class="section soft"><div class="container"><div class="section-head"><div><div class="section-kicker">Latest update</div><h2>Development, all in one place.</h2></div><a href={url('/blog/')} class="btn btn-light">All updates →</a></div>
+{featured ? <a class="card" href={url(`/blog/${featured.id}/`)}><span class="tag">{featured.data.category}</span><div class="meta" style="margin-top:12px">{featured.data.pubDate.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})} · {featured.data.project}</div><h3>{featured.data.title}</h3><p class="muted">{featured.data.description}</p><b>Read update →</b></a> : <div class="card">No updates yet.</div>}
+</div></section>
+<section class="section"><div class="container"><div class="section-head"><div><div class="section-kicker">Current project</div><h2>Digimon Odyssey</h2></div></div>
+<div class="cards"><a class="card" href={url('/games/')}><span class="tag">Game</span><h3>Project overview</h3><p class="muted">The central landing page for Digimon Odyssey, including status, links, and key information.</p><b>View game →</b></a><a class="card" href={url('/database/')}><span class="tag">Knowledge</span><h3>Odyssey Database</h3><p class="muted">A wiki-style library for Digimon, items, locations, mechanics, quests, and more.</p><b>Open database →</b></a><a class="card" href={url('/blog/')}><span class="tag">News</span><h3>Dev updates</h3><p class="muted">Announcements, development previews, patch notes, and release news.</p><b>Read updates →</b></a></div>
+</div></section>
+</main>
+</BaseLayout>

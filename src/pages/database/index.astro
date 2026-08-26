@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL;
+const url = (path) => `${base}${path.replace(/^\//,'')}`;
+const entries = (await getCollection('database', ({data}) => !data.draft))
+.sort((a,b)=>a.data.order-b.data.order || a.data.title.localeCompare(b.data.title));
+const cats = ['Digimon','Locations','Items','Systems','Quests','NPCs','Guides'];
+---
+<BaseLayout title="Database — Chronowire Studio" active="database">
+<main><section class="page-hero"><div class="container"><span class="eyebrow">Digimon Odyssey Database</span><h1>Know the <span>world.</span></h1><p class="lead">A searchable, wiki-style knowledge base for Digimon Odyssey.</p>
+<div class="toolbar"><input id="dbSearch" class="search" placeholder="Search Digimon, items, locations, systems…" /><select id="dbFilter" class="filter"><option value="all">All categories</option>{cats.map(c=><option value={c}>{c}</option>)}</select></div>
+</div></section><section class="section" style="padding-top:10px"><div class="container"><div class="db-grid">
+{entries.map(entry=><a class="db-card" data-category={entry.data.category} href={url(`/database/${entry.id}/`)}><div class="type">{entry.data.category}</div><h3>{entry.data.title}</h3><p>{entry.data.description}</p></a>)}
+</div><div class="empty" id="empty">No database entries matched your search.</div></div></section></main>
+<script is:inline>
+const search=document.querySelector('#dbSearch'),filter=document.querySelector('#dbFilter'),cards=[...document.querySelectorAll('.db-card')],empty=document.querySelector('#empty');
+function apply(){const q=(search?.value||'').toLowerCase(),cat=filter?.value||'all';let shown=0;cards.forEach(c=>{const show=c.innerText.toLowerCase().includes(q)&&(cat==='all'||c.dataset.category===cat);c.style.display=show?'block':'none';if(show)shown++});empty.style.display=shown?'none':'block'}
+search?.addEventListener('input',apply);filter?.addEventListener('change',apply);
+</script>
+</BaseLayout>
