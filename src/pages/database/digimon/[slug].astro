@@ -1,0 +1,9 @@
+---
+import { getCollection, render } from 'astro:content';
+import PlayableDigimonLayout from '../../../layouts/PlayableDigimonLayout.astro';
+export async function getStaticPaths(){const entries=await getCollection('playableDigimon',({data})=>!data.draft);return entries.map(entry=>({params:{slug:entry.data.slug},props:{entry}}))}
+const { entry }=Astro.props;
+const { Content }=await render(entry);
+---
+<PlayableDigimonLayout entry={entry}><Content/></PlayableDigimonLayout>
+

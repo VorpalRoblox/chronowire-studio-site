@@ -1,0 +1,9 @@
+---
+import { getCollection, render } from 'astro:content';
+import EnemyLayout from '../../../layouts/EnemyLayout.astro';
+export async function getStaticPaths(){const entries=await getCollection('enemies',({data})=>!data.draft);return entries.map(entry=>({params:{slug:entry.data.slug},props:{entry}}))}
+const { entry }=Astro.props;
+const { Content }=await render(entry);
+---
+<EnemyLayout entry={entry}><Content/></EnemyLayout>
+

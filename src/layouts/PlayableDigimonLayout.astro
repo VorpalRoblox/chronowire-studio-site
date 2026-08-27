@@ -1,0 +1,27 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const { entry } = Astro.props;
+const data = entry.data;
+const base=import.meta.env.BASE_URL;
+const url=(path='')=>`${base.replace(/\/+$/,'')}/${path.replace(/^\/+/, '')}`;
+const playable=await getCollection('playableDigimon',({data})=>!data.draft);
+const names=new Map(playable.map(item=>[item.data.slug,item.data.title]));
+const evolutionUrl=(slug)=>url(`/database/digimon/${slug}/`);
+const relatedUrl=(item)=>item.collection==='playable-digimon'?url(`/database/digimon/${item.slug}/`):item.collection==='enemies'?url(`/database/enemies/${item.slug}/`):url(`/database/${item.slug}/`);
+const statRows=[['HP',data.stats.hp],['Attack',data.stats.attack],['Defense',data.stats.defense],['Speed',data.stats.speed],...Object.entries(data.stats.additional)];
+---
+<BaseLayout title={`${data.title} — Playable Digimon Archive`} description={data.description} active="database"><main class="record-page">
+<header class="record-head"><div class="container"><div class="breadcrumb"><a href={url('/database/')}>ODYSSEY DATABASE</a> / PLAYABLE DIGIMON / <span>{data.slug.toUpperCase()}</span></div><div class="record-heading"><div><div class="record-class">PLAYABLE DIGIMON // {data.stage.toUpperCase()}</div><h1>{data.title}</h1><p>{data.description}</p></div><div class:list={['data-badge',data.placeholder&&'placeholder']}><small>DATA STATUS</small><b>{data.dataStatus}</b></div></div></div></header>
+<div class="container record-grid"><aside class="record-aside"><div class="frame-label"><span>ENTITY VISUAL</span><span>{data.slug.toUpperCase()}</span></div>{data.image?<img class="record-image" src={url(data.image)} alt={data.title}/>:<div class="record-image missing">IMAGE PENDING</div>}<dl class="record-facts"><div><dt>STAGE</dt><dd>{data.stage}</dd></div><div><dt>ATTRIBUTE</dt><dd>{data.attribute}</dd></div><div><dt>TYPE / SPECIES</dt><dd>{data.species}</dd></div></dl></aside>
+<article class="record-content">
+  {data.placeholder&&<div class="placeholder-notice"><b>EXAMPLE DATA</b><span>Values and abilities on this sample page are placeholders and are not official Digimon Odyssey information.</span></div>}
+  <section id="overview" class="record-section"><div class="record-section-title"><span>01</span><h2>Overview</h2></div><p class="record-lead">{data.description}</p><slot/></section>
+  <section id="stats" class="record-section"><div class="record-section-title"><span>02</span><h2>Stats</h2></div><div class="stat-grid">{statRows.map(([label,value])=><div><small>{label}</small><strong>{value}</strong>{data.placeholder&&<i>EXAMPLE</i>}</div>)}</div></section>
+  <section id="attacks" class="record-section"><div class="record-section-title"><span>03</span><h2>Attacks</h2></div><div class="attack-list">{data.attacks.map((attack,i)=><article><div class="attack-index">ATK-{(i+1).toString().padStart(2,'0')}</div><div><h3>{attack.name}</h3><p>{attack.description}</p><dl><div><dt>POWER</dt><dd>{attack.power??'—'}</dd></div><div><dt>TYPE / ELEMENT</dt><dd>{attack.element??'—'}</dd></div><div><dt>EFFECT</dt><dd>{attack.effect??'—'}</dd></div><div><dt>COOLDOWN / COST</dt><dd>{attack.cooldown??'—'}</dd></div></dl></div></article>)}</div></section>
+  <section id="digivolution" class="record-section"><div class="record-section-title"><span>04</span><h2>Digivolution</h2></div><div class="evolution-grid"><div><small>EVOLVES FROM</small>{data.digivolution.from.length?data.digivolution.from.map(slug=><a href={evolutionUrl(slug)}><span>{names.get(slug)??slug}</span><b>← VIEW RECORD</b></a>):<p>No previous evolution recorded.</p>}</div><div><small>EVOLVES TO</small>{data.digivolution.to.length?data.digivolution.to.map(slug=><a href={evolutionUrl(slug)}><span>{names.get(slug)??slug}</span><b>VIEW RECORD →</b></a>):<p>No next evolution recorded.</p>}</div></div></section>
+  <section id="requirements" class="record-section"><div class="record-section-title"><span>05</span><h2>Requirements</h2></div><div class="requirement-grid"><div><small>LEVEL</small><b>{data.requirements.level??'None recorded'}</b></div><div><small>BOND / FRIENDSHIP</small><b>{data.requirements.bond??'None recorded'}</b></div><div><small>STATS</small><ul>{data.requirements.stats.length?data.requirements.stats.map(v=><li>{v}</li>):<li>None recorded</li>}</ul></div><div><small>ITEMS</small><ul>{data.requirements.items.length?data.requirements.items.map(v=><li>{v}</li>):<li>None recorded</li>}</ul></div><div><small>QUESTS</small><ul>{data.requirements.quests.length?data.requirements.quests.map(v=><li>{v}</li>):<li>None recorded</li>}</ul></div><div><small>CUSTOM NOTES</small><ul>{data.requirements.notes.length?data.requirements.notes.map(v=><li>{v}</li>):<li>None recorded</li>}</ul></div></div></section>
+  <section id="acquisition" class="record-section"><div class="record-section-title"><span>06</span><h2>Acquisition</h2></div><div class="archive-note">{data.acquisition}</div></section>
+  <section id="related" class="record-section"><div class="record-section-title"><span>07</span><h2>Related Entries</h2></div><div class="related-list">{data.related.length?data.related.map(item=><a href={relatedUrl(item)}><span>{item.collection.replace('-',' ').toUpperCase()}</span><b>{item.title}</b><i>OPEN ↗</i></a>):<p class="muted">No related entries recorded.</p>}</div></section>
+</article></div></main></BaseLayout>
+
