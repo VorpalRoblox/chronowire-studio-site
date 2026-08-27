@@ -6,7 +6,7 @@ const {
   active = ''
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const url = (path) => `${base}${path.replace(/^\//,'')}`;
+const url = (path = '') => `${base.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`;
 ---
 <!doctype html>
 <html lang="en">
