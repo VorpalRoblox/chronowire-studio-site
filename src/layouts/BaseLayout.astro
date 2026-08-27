@@ -18,7 +18,7 @@ const url = (path = '') => `${base.replace(/\/+$/, '')}/${path.replace(/^\/+/, '
 </head>
 <body>
 <div class="nav-wrap"><div class="container nav">
-  <a class="brand" href={url('/')}><span class="logo"></span><span>Chronowire <span class="orange">Studio</span></span></a>
+  <a class="brand" href={url('/')}><img class="logo" src={url('/images/digimon-odyssey-icon.png')} alt="" /><span>Chronowire <span class="orange">Studio</span></span></a>
   <button class="hamb" id="menuButton">Menu</button>
   <nav class="nav-links" id="navLinks">
     <a class:list={[active==='home' && 'active']} href={url('/')}>Home</a>
@@ -30,7 +30,7 @@ const url = (path = '') => `${base.replace(/\/+$/, '')}/${path.replace(/^\/+/, '
 </div></div>
 <slot />
 <footer class="footer"><div class="container footer-grid">
-  <div><a class="brand" href={url('/')}><span class="logo"></span><span>Chronowire <span class="orange">Studio</span></span></a><p style="color:#aaa;max-width:420px;line-height:1.6">Games, development updates, and community knowledge for Chronowire Studio projects.</p><small>Fan-made studio website concept. Digimon is a trademark of its respective rights holders.</small></div>
+  <div><a class="brand" href={url('/')}><img class="logo" src={url('/images/digimon-odyssey-icon.png')} alt="" /><span>Chronowire <span class="orange">Studio</span></span></a><p style="color:#aaa;max-width:420px;line-height:1.6">Games, development updates, and community knowledge for Chronowire Studio projects.</p><small>Fan-made studio website concept. Digimon is a trademark of its respective rights holders.</small></div>
   <div><b>Explore</b><a href={url('/games/')}>Games</a><a href={url('/blog/')}>Updates</a><a href={url('/database/')}>Database</a></div>
   <div><b>Community</b><a href="https://www.roblox.com/communities/4473875/Chronowire-Studio#!/about" target="_blank">Roblox Group</a><a href="https://www.roblox.com/games/92494551546395/Digimon-Odyssey" target="_blank">Play Digimon Odyssey</a></div>
 </div></footer>
