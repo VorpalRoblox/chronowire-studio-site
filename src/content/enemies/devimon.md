@@ -2,54 +2,74 @@
 title: "Devimon"
 slug: "devimon"
 type: "Boss"
-description: "Sample boss record demonstrating encounter, access, attack, and reward data."
-level: 200
-location: "Devimon Arena (example location)"
-dataStatus: "Example / Unverified"
-placeholder: true
+attribute: "Virus"
+description: "A Level 225 boss encountered in the Graveyard Mausoleum."
+level: 225
+location: "Graveyard Mausoleum"
+dataStatus: "Game Data"
+placeholder: false
 stats:
-  hp: 50000
-  attack: 850
-  defense: 620
-  speed: 300
-  additional:
-    Phase Count: 2
+  hp: 29000
+  attack: 750
+  speed: 42
+  additional: {}
 attacks:
-  - name: "Example Boss Attack"
-    description: "Placeholder frontal attack used to demonstrate boss attack data."
-    power: "Example: high damage"
-    effect: "Example: knockback"
-    cooldown: "Example: used every 12 seconds"
-  - name: "Example Phase Attack"
-    description: "Placeholder phase mechanic; not confirmed Digimon Odyssey information."
-    effect: "Example: arena-wide damage"
-    cooldown: "Condition: below 50% HP"
+  - name: "Hell Pillars"
+    description: "Creates multiple delayed pillars around the arena."
+    power: 1200
+    cooldown: "8 seconds"
+  - name: "Death Claw"
+    description: "Pulls the target toward Devimon before a follow-up strike."
+    power: 900
+    followUpDamage: 600
+    cooldown: "9 seconds"
+  - name: "Leather Wing"
+    description: "Fires a wide multi-lane attack across the arena."
+    power: 800
+    cooldown: "8 seconds"
 access:
   minimumLevel: 200
-  quests: ["Example arena access quest"]
-  items: ["Example Arena Pass ×1"]
-  party: "Example: 1–4 players"
-  notes: ["Minimum Level 200 and all other access values are examples pending official confirmation."]
+  quests: []
+  items: []
+  notes: []
 rewards:
-  exp: "Example: 25,000"
-  currency: "Example: 5,000 currency"
-  guaranteedDrops: ["Example guaranteed material"]
-  normalDrops: ["Example common drop"]
-  rareDrops: ["Example rare drop"]
-  firstClear: ["Example first-clear title"]
-  questRewards: ["Example quest completion reward"]
+  exp: 220000
+  currency: 8000
+  drops:
+    - item: "DataChip 1.0"
+      chance: "100%"
+      amount: "7–10"
+    - item: "DataChip 2.0"
+      chance: "65%"
+      amount: "4–7"
+    - item: "Digital Shard"
+      chance: "90%"
+      amount: "12–22"
+    - item: "Corrupted Data"
+      chance: "75%"
+      amount: "3–7"
+    - item: "Champion Data"
+      chance: "55%"
+      amount: "5–9"
+    - item: "Core Fragments"
+      chance: "100%"
+      amount: "12–18"
+    - item: "Unstable Core"
+      chance: "35%"
+      amount: "1–2"
+  guaranteedDrops: []
+  normalDrops: []
+  rareDrops: []
+  firstClear: []
+  questRewards: []
 encounter:
-  respawn: "Example: 15 minutes"
-  rules: ["Instanced arena (example)", "Leaving the arena resets the encounter (example)"]
-  phases: ["Phase 1: standard pattern (example)", "Phase 2: enhanced attacks below 50% HP (example)"]
-  partySize: "Example: 1–4 players"
-  mechanics: ["Example: avoid marked ground zones", "Example: interrupt the charged attack"]
-related:
-  - title: "Evolution"
-    slug: "evolution"
-    collection: "database"
+  respawn: "180 seconds / 3 minutes"
+  rules: []
+  phases: []
+  mechanics: []
+related: []
 draft: false
 ---
 
-This sample is intentionally marked unverified so placeholder values cannot be mistaken for official boss data.
+Only player-facing encounter information is shown on this page.
 
