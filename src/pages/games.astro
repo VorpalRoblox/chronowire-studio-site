@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const base = import.meta.env.BASE_URL;
-const url = (path) => `${base}${path.replace(/^\//,'')}`;
+import { getCollection } from 'astro:content';
+const base=import.meta.env.BASE_URL;
+const url=(path='')=>`${base.replace(/\/+$/,'')}/${path.replace(/^\/+/, '')}`;
+const posts=(await getCollection('blog',({data})=>!data.draft)).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
+const latest=posts[0];
 ---
-<BaseLayout title="Games — Chronowire Studio" active="games">
-<main><section class="page-hero"><div class="container"><span class="eyebrow">Games</span><h1>Our <span>projects.</span></h1><p class="lead">Chronowire Studio currently has one featured project: Digimon Odyssey.</p></div></section>
-<section class="section" style="padding-top:25px"><div class="container game-page-grid">
-<aside class="game-side"><a class="side-icon" href="https://www.roblox.com/games/92494551546395/Digimon-Odyssey" target="_blank"><img src={url('/images/digimon-odyssey-art.png')} alt="Digimon Odyssey icon" /></a><ul class="facts"><li><span>Platform</span><b>Roblox</b></li><li><span>Studio</span><b>Chronowire</b></li><li><span>Status</span><b>In development</b></li><li><span>Genre</span><b>Adventure / RPG</b></li></ul><a class="btn btn-orange" href="https://www.roblox.com/games/92494551546395/Digimon-Odyssey" target="_blank" style="width:100%">Play on Roblox ↗</a></aside>
-<div><div class="section-kicker">Digimon Odyssey</div><h2 style="font-size:52px;margin:8px 0 16px;letter-spacing:-.055em">Begin your Odyssey.</h2><p class="lead">The official Chronowire Studio hub for Digimon Odyssey information, development updates, and its growing community database.</p>
-<div class="cards" style="grid-template-columns:1fr 1fr;margin-top:30px"><a class="card" href={url('/database/')}><h3>Game Database</h3><p class="muted">Browse entries for Digimon, locations, items, systems, quests, NPCs, and progression.</p><b>Browse database →</b></a><a class="card" href={url('/blog/')}><h3>Latest Updates</h3><p class="muted">Development blogs, announcements, previews, patch notes, and release news.</p><b>View updates →</b></a></div>
-</div></div></section></main>
-</BaseLayout>
+<BaseLayout title="Project 01 / Digimon Odyssey — Chronowire Studio" active="games"><main class="dossier-page">
+<section class="dossier-head"><div class="container"><div class="breadcrumb">PROJECT ARCHIVE / ACTIVE / <span>01</span></div><div class="dossier-title"><div><div class="project-label"><span>PROJECT 01 / DIGIMON ODYSSEY</span><b>IN DEVELOPMENT</b></div><h1>PROJECT<br/><em>DOSSIER</em></h1></div><div class="dossier-code">CW-ODY<br/>01-A</div></div></div></section>
+<section class="section dossier-body"><div class="container dossier-grid"><aside class="dossier-visual"><div class="frame-label"><span>PROJECT ICON</span><span>800×800</span></div><a class="side-icon" href="https://www.roblox.com/games/92494551546395/Digimon-Odyssey" target="_blank" rel="noreferrer"><img src={url('/images/digimon-odyssey-art.png')} alt="Digimon Odyssey game icon"/></a><a class="btn btn-orange full" href="https://www.roblox.com/games/92494551546395/Digimon-Odyssey" target="_blank" rel="noreferrer">Play on Roblox ↗</a></aside><div class="dossier-content"><section class="dossier-block"><span class="block-number">01 // OVERVIEW</span><h2>Begin your Odyssey.</h2><p class="lead">Digimon Odyssey is Chronowire Studio's evolving Roblox adventure: a world of exploration, progression systems, discoveries, and community knowledge.</p></section><dl class="spec-grid"><div><dt>STATUS</dt><dd><i></i>In Development</dd></div><div><dt>PLATFORM</dt><dd>Roblox</dd></div><div><dt>GENRE</dt><dd>Adventure / RPG</dd></div><div><dt>STUDIO</dt><dd>Chronowire</dd></div></dl><div class="dossier-links"><a href={url('/database/')}><small>02 // FIELD ARCHIVE</small><h3>Odyssey Database</h3><p>Digimon, locations, items, systems, quests, and guides.</p><b>OPEN DATABASE →</b></a><a href={latest?url(`/blog/${latest.id}/`):url('/blog/')}><small>03 // LATEST TRANSMISSION</small><h3>{latest?.data.title??'Development Updates'}</h3><p>{latest?.data.description??'Follow project announcements and development records.'}</p><b>VIEW UPDATE →</b></a></div></div></div></section>
+</main></BaseLayout>
+
